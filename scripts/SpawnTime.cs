@@ -4,10 +4,16 @@ using System.Collections;
 public class SpawnTime {
 	public float start;
 	public float end;
-
+	public GameObject[] pathLength;
+	public static Vector3[] path;
 	// Use this for initialization
 	void Start () {
-	
+		int i = 0;
+			foreach (GameObject node in pathLength){
+				path[i] = node.transform.position;
+				i++;
+			}
+
 	}
 	
 	// Update is called once per frame

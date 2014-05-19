@@ -18,7 +18,7 @@
 
 	// Use this for initialization
 	void Start () {
-		path = NewPath ();
+		path = SpawnTime.path;
 		iTween.PutOnPath(spawn, path, 1);
 		spawn.SetActive (true);
 		hash.Clear();
@@ -103,11 +103,7 @@
 		//Start ();
 	}
 	
-	void OnDrawGizmos(){
-		if(path.Length > 0){
-			iTween.DrawPath (path, Color.white);
-		}
-	}
+
 	
 	
 	Vector3[] NewPath(){
