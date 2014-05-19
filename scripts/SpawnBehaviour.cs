@@ -14,11 +14,11 @@
 	public static float time;
 	Hashtable hash = new Hashtable();
 	public Color color;
-	Vector3[] path = new Vector3[]{};
+	public static Vector3[] path = new Vector3[]{};
 
 	// Use this for initialization
 	void Start () {
-		path = SpawnTime.path;
+		path = createPath ();
 		iTween.PutOnPath(spawn, path, 1);
 		spawn.SetActive (true);
 		hash.Clear();
@@ -62,6 +62,16 @@
 			Destroy (spawn);
 			combo = 0;
 				}*/
+	}
+
+	Vector3[] createPath(){
+		GameObject[] nodes = SpawnTime.pathLength;
+		int i = 0;
+		foreach (GameObject node in nodes) {
+			path[i] = nodes[i].transform.position;
+			i++;
+		}
+		return path;
 	}
 
 	void OnTriggerEnter2D(Collider2D coll){
