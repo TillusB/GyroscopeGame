@@ -13,21 +13,23 @@
 	public int combo;
 	public static float time;
 	public static GameObject[] pathNodes;
-	Hashtable hash = new Hashtable();
+	public Hashtable hash = new Hashtable();
 	public Color color;
 	Vector3[] path = new Vector3[]{};
-
+	int i;
 	public Material material;
 
 	private LineRenderer line;
+	private TrailRenderer trail;
 
 	// Use this for initialization
 	void Start () {
+		i = 0;
 		path = NewPath();
 		iTween.PutOnPath(spawn, path, 1);
 		spawn.SetActive (true);
 		hash.Clear();
-		hash.Add ("name", "moveOnRandom");
+		hash.Add ("name", "moveOnRandom"); //TODO delay einbauen!
 		hash.Add ("path", path);
 		hash.Add ("time", time);
 		hash.Add ("oncomplete", "Die");
@@ -38,28 +40,33 @@
 		path.Initialize ();
 
 
-		line = spawn.AddComponent("LineRenderer") as LineRenderer;
-		line.SetWidth (0.1f, 0.1f);
-		line.material = material;
-		line.SetColors (Color.white, Color.white);
-		line.SetVertexCount (path.Length);
-		line.renderer.enabled = true;
-
-		for (int i = 0; i < path.Length; i++) {
-			line.SetPosition(i, path[i]);		
-		}
-
+//		line = spawn.AddComponent("LineRenderer") as LineRenderer;
+//		line.SetWidth (0.1f, 0.1f);
+//		line.material = material;
+//		line.SetColors (Color.white, Color.white);
+//		line.SetVertexCount (1000);
+//		line.renderer.enabled = true;
+//	
+//		for (int i = 0; i < path.Length; i++) {
+//			line.SetPosition(i, path[i]);		
+//		}
+		trail = spawn.AddComponent ("TrailRenderer") as TrailRenderer;
+		trail.material = material;
+		trail.startWidth = 0.1f;
+		trail.endWidth = 0.5f;
+		trail.time = 5;
+		trail.renderer.enabled = true;
 
 		X = Random.Range (-0.1f, 0.1f);
 		Y = Random.Range (-0.0f, 0.0f);
 		points = 0;
-
-
+		
 	}
 
 	// Update is called once per frame
 	void Update () {
-
+//		line.SetPosition (i, spawn.transform.position);
+		i++;
 		//spawn.transform.Translate (X, Y, 0);
 
 		if (Input.touches.Length > 0 && Input.GetTouch (0).phase == TouchPhase.Moved) {
