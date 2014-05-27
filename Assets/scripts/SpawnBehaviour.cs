@@ -13,6 +13,7 @@
 	public int combo;
 	public static float time;
 	public static GameObject[] pathNodes;
+	public static bool isSwipe;
 	public Hashtable hash = new Hashtable();
 	public Color color;
 	Vector3[] path = new Vector3[]{};
@@ -54,7 +55,7 @@
 		trail.material = material;
 		trail.startWidth = 0.1f;
 		trail.endWidth = 0.5f;
-		trail.time = 5;
+		trail.time = 1;
 		trail.renderer.enabled = true;
 
 		X = Random.Range (-0.1f, 0.1f);
@@ -75,7 +76,7 @@
 			Vector3 worldTouch = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 0));
 
 
-			if(inZone && inSprite (worldTouch.x, worldTouch.y)){
+			if(!isSwipe && inZone && inSprite (worldTouch.x, worldTouch.y)){
 				Destroy(spawn);
 				addPoints();
 			}

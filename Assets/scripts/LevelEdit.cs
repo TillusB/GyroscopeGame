@@ -24,6 +24,7 @@ public class LevelEdit : MonoBehaviour {
 				Instantiate (spawn, new Vector3 (spawnLocation.transform.position.x, spawnLocation.transform.position.y, 0), Quaternion.identity);
 				SpawnBehaviour.time = spawnTimes[i].end - spawnTimes[i].start;
 				SpawnBehaviour.pathNodes = spawnTimes[i].paths;
+				SpawnBehaviour.isSwipe = spawnTimes[i].isSwipe;
 				numberOfSpawns --;
 			}
 		}
