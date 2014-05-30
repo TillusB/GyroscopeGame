@@ -4,8 +4,8 @@
 	public class SpawnBehaviour : MonoBehaviour {
 
 
-	public GameObject spawn;
-
+//	public GameObject spawn;
+	private RaycastHit hit;
 	private float X;
 	private float Y;
 	private bool inZone = false;
@@ -27,8 +27,8 @@
 	void Start () {
 		i = 0;
 		path = NewPath();
-		iTween.PutOnPath(spawn, path, 1);
-		spawn.SetActive (true);
+		iTween.PutOnPath(gameObject, path, 1);
+		gameObject.SetActive (true);
 		hash.Clear();
 		hash.Add ("name", "moveOnRandom"); //TODO delay einbauen!
 		hash.Add ("path", path);
@@ -36,7 +36,7 @@
 		hash.Add ("oncomplete", "Die");
 		hash.Add ("easetype", iTween.EaseType.easeInOutSine);
 		
-		spawn.SetActive (true);
+		gameObject.SetActive (true);
 		Move ();
 		path.Initialize ();
 
@@ -51,7 +51,7 @@
 //		for (int i = 0; i < path.Length; i++) {
 //			line.SetPosition(i, path[i]);		
 //		}
-		trail = spawn.AddComponent ("TrailRenderer") as TrailRenderer;
+		trail = gameObject.AddComponent ("TrailRenderer") as TrailRenderer;
 		trail.material = material;
 		trail.startWidth = 0.1f;
 		trail.endWidth = 0.5f;
@@ -67,29 +67,37 @@
 	// Update is called once per frame
 	void Update () {
 //		line.SetPosition (i, spawn.transform.position);
-		i++;
 		//spawn.transform.Translate (X, Y, 0);
 
-		if (Input.touches.Length > 0 && Input.GetTouch (0).phase == TouchPhase.Moved) {
+		if (transform.position.x > 5.5 || transform.position.x < -5.5) { //TODO Nich so kaka fixen
+						inZone = true;
+						print ("yoo");
+				} else
+						inZone = false;
+
+		if (Input.touches.Length > 0 && Input.GetTouch (0).phase == TouchPhase.Began) {
 			Touch touch = Input.GetTouch (0);
 
 			Vector3 worldTouch = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 0));
 
 
 			if(!isSwipe && inZone && inSprite (worldTouch.x, worldTouch.y)){
-				Destroy(spawn);
+				Destroy(gameObject);
 				addPoints();
 			}
 			
 		}
 
+
 	/*	if (transform.position.x > 9 || transform.position.x < -9 || transform.position.y > 6 || transform.position.y < -4) {
 			Destroy (spawn);
 			combo = 0;
 				}*/
+
+	
 	}
 
-	void OnTriggerEnter2D(Collider2D coll){
+	void OnTriggerEnter2D(Collider2D coll){ //IT DASNT WERK!
 			inZone = true;	
 			print ("bla");
 	}
@@ -117,7 +125,7 @@
 
 	void Move(){
 		
-		iTween.MoveFrom(spawn, hash);
+		iTween.MoveFrom(gameObject, hash);
 		
 	}
 	
@@ -143,7 +151,7 @@
 
 		Vector3[] datPath = new Vector3[pathNodes.Length];
 
-		datPath [0] = spawn.transform.position;
+		datPath [0] = gameObject.transform.position;
 
 		for(int i = 1; i < pathNodes.Length; i++){
 			datPath[i] = pathNodes[i].transform.position;
