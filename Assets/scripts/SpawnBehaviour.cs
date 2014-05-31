@@ -3,103 +3,86 @@
 
 	public class SpawnBehaviour : MonoBehaviour {
 
-
-//	public GameObject spawn;
-	private RaycastHit hit;
-	private float X;
-	private float Y;
 	private bool inZone = false;
 	public int points;
 	public int combo;
 	public static float time;
 	public static GameObject[] pathNodes;
+
+
+	public GameObject[] zoneRechts;
+
 	public static bool isSwipe;
-	public Hashtable hash = new Hashtable();
+
+	Hashtable hash = new Hashtable();
 	public Color color;
 	Vector3[] path = new Vector3[]{};
-	int i;
+
 	public Material material;
 
-	private LineRenderer line;
 	private TrailRenderer trail;
 
 	// Use this for initialization
 	void Start () {
-		i = 0;
+
+		zoneRechts = GameObject.FindGameObjectsWithTag("Zone");
+
 		path = NewPath();
 		iTween.PutOnPath(gameObject, path, 1);
 		gameObject.SetActive (true);
 		hash.Clear();
-		hash.Add ("name", "moveOnRandom"); //TODO delay einbauen!
+		hash.Add ("name", "moveOnRandom");
 		hash.Add ("path", path);
 		hash.Add ("time", time);
 		hash.Add ("oncomplete", "Die");
-		hash.Add ("easetype", iTween.EaseType.easeInOutSine);
+		hash.Add ("easetype", iTween.EaseType.linear);
 		
 		gameObject.SetActive (true);
 		Move ();
 		path.Initialize ();
 
 
-//		line = spawn.AddComponent("LineRenderer") as LineRenderer;
-//		line.SetWidth (0.1f, 0.1f);
-//		line.material = material;
-//		line.SetColors (Color.white, Color.white);
-//		line.SetVertexCount (1000);
-//		line.renderer.enabled = true;
-//	
-//		for (int i = 0; i < path.Length; i++) {
-//			line.SetPosition(i, path[i]);		
-//		}
-		trail = gameObject.AddComponent ("TrailRenderer") as TrailRenderer;
-		trail.material = material;
-		trail.startWidth = 0.1f;
-		trail.endWidth = 0.5f;
-		trail.time = 1;
-		trail.renderer.enabled = true;
+		combo = HighscoreScript.combo;
 
-		X = Random.Range (-0.1f, 0.1f);
-		Y = Random.Range (-0.0f, 0.0f);
 		points = 0;
-		
+
+
 	}
 
 	// Update is called once per frame
 	void Update () {
-//		line.SetPosition (i, spawn.transform.position);
-		//spawn.transform.Translate (X, Y, 0);
 
 		if (transform.position.x > 5.5 || transform.position.x < -5.5) { //TODO Nich so kaka fixen
-						inZone = true;
-						print ("yoo");
-				} else
-						inZone = false;
+			inZone = true;
+			print ("yoo");
+		} else
+			inZone = false;
 
+		
 		if (Input.touches.Length > 0 && Input.GetTouch (0).phase == TouchPhase.Began) {
 			Touch touch = Input.GetTouch (0);
 
 			Vector3 worldTouch = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 0));
 
 
-			if(!isSwipe && inZone && inSprite (worldTouch.x, worldTouch.y)){
+			if( inZone && inSprite (worldTouch.x, worldTouch.y)){
+				//spawn.transform.localScale = new Vector3(2,2,2);
 				Destroy(gameObject);
 				addPoints();
 			}
-			
 		}
-
 
 	/*	if (transform.position.x > 9 || transform.position.x < -9 || transform.position.y > 6 || transform.position.y < -4) {
 			Destroy (spawn);
 			combo = 0;
 				}*/
-
-	
 	}
 
-	void OnTriggerEnter2D(Collider2D coll){ //IT DASNT WERK!
-			inZone = true;	
-			print ("bla");
+	void OnTriggerEnter2D(Collider2D coll){
+		inZone = true;
+
+		Debug.Log ("triggered");
+			//print ("bla");
 	}
 
 		bool inSprite(float posX, float posY){
@@ -131,7 +114,9 @@
 	
 	
 	void Die(){
-		gameObject.SetActive (false);
+		print ("dying!");
+		inZone = true;
+		//gameObject.SetActive (false);
 		//NewPath ();
 		//Start ();
 	}
@@ -174,5 +159,8 @@
 			} else {
 				points += 20;
 			}
+		HighscoreScript.points += points;
+		HighscoreScript.combo += 1;
+
 		}
 	}

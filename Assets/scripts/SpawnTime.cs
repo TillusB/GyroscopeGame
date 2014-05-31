@@ -4,7 +4,9 @@ using System.Collections;
 public class SpawnTime {
 	public float start;
 	public float end;
+
 	public bool isSwipe;
+
 	public GameObject[] paths;
 
 	// Use this for initialization
@@ -20,7 +22,6 @@ public class SpawnTime {
 	float getStart(){
 		return start;
 	}
-
 
 	void setStart(float newStart){
 		start = newStart;

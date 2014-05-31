@@ -11,7 +11,7 @@ public class CircleBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Timer = 0.1f;
-		speed = 5;
+		speed = 0.5f;
 		acc.text = "";
 		yOffset = Input.acceleration.y;
 	}
@@ -25,7 +25,7 @@ public class CircleBehaviour : MonoBehaviour {
 
 		acc.text = "x = " + moveHorizontal + " y = " + moveVertical;
 
-		circle.transform.Translate (moveHorizontal/2, moveVertical/2, 0);
+		circle.transform.Translate (moveHorizontal*speed, moveVertical*speed, 0);
 		
 		//Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
 		
