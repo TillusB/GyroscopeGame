@@ -55,7 +55,14 @@
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.touches.Length > 0 && Input.GetTouch (0).phase == TouchPhase.Moved) {
+		if (transform.position.x > 5.5 || transform.position.x < -5.5) { //TODO Nich so kaka fixen
+			inZone = true;
+			print ("yoo");
+		} else
+			inZone = false;
+
+		
+		if (Input.touches.Length > 0 && Input.GetTouch (0).phase == TouchPhase.Began) {
 			Touch touch = Input.GetTouch (0);
 
 			Vector3 worldTouch = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 0));
