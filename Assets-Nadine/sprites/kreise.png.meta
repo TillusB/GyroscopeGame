@@ -1,0 +1,90 @@
+fileFormatVersion: 2
+guid: 60d9c25b2499643cbb12ab4f10c6eb91
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: kreise_0
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 224
+        width: 144
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: kreise_1
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 141
+        width: 36
+        height: 30
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: kreise_2
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 159
+        width: 59
+        height: 59
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: kreise_3
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 29
+        width: 82
+        height: 76
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: kreise_4
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 330
+        width: 62
+        height: 59
+      alignment: 0
+      pivot: {x: .5, y: .5}
+  spritePackingTag: 
+  userData: 
