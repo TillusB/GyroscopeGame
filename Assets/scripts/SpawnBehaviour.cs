@@ -8,10 +8,9 @@
 	public int combo;
 	public static float time;
 	public static GameObject[] pathNodes;
-
+	Vector3 growSize;
 
 	public GameObject[] zoneRechts;
-
 	public static bool isSwipe;
 
 	Hashtable hash = new Hashtable();
@@ -19,11 +18,12 @@
 	Vector3[] path = new Vector3[]{};
 
 	public Material material;
-
 	private TrailRenderer trail;
 
 	// Use this for initialization
 	void Start () {
+
+		growSize = new Vector3(gameObject.transform.localScale.x * 1.5f, gameObject.transform.localScale.y * 1.5f, gameObject.transform.localScale.z * 1.5f);
 
 		zoneRechts = GameObject.FindGameObjectsWithTag("Zone");
 
@@ -54,7 +54,6 @@
 
 		if (transform.position.x > 5.5 || transform.position.x < -5.5) { //TODO Nich so kaka fixen
 			inZone = true;
-			print ("yoo");
 		} else
 			inZone = false;
 
@@ -65,9 +64,18 @@
 			Vector3 worldTouch = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 0));
 
 
-			if( inZone && inSprite (worldTouch.x, worldTouch.y)){
+			if( !isSwipe && inZone && inSprite (worldTouch.x, worldTouch.y)){
 				//spawn.transform.localScale = new Vector3(2,2,2);
+				gameObject.transform.localScale = growSize;
+			
+				sleep(.5f);
+
 				Destroy(gameObject);
+				addPoints();
+			}
+
+			if(isSwipe && Input.GetTouch(0).phase == TouchPhase.Moved){
+				gameObject.transform.localScale = growSize;
 				addPoints();
 			}
 		}
@@ -76,6 +84,9 @@
 			Destroy (spawn);
 			combo = 0;
 				}*/
+	}
+	IEnumerator sleep(float time){
+		yield return new WaitForSeconds(1);
 	}
 
 	void OnTriggerEnter2D(Collider2D coll){
@@ -116,6 +127,8 @@
 	void Die(){
 		print ("dying!");
 		inZone = true;
+		sleep (5);
+		Destroy (gameObject);
 		//gameObject.SetActive (false);
 		//NewPath ();
 		//Start ();
