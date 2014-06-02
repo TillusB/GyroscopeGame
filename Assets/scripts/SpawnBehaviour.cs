@@ -68,15 +68,16 @@
 				//spawn.transform.localScale = new Vector3(2,2,2);
 				gameObject.transform.localScale = growSize;
 			
-				sleep(.5f);
 
-				Destroy(gameObject);
+				StartCoroutine(growAndDie(0.2f));
 				addPoints();
 			}
 
-			if(isSwipe && Input.GetTouch(0).phase == TouchPhase.Moved){
+			if(isSwipe && Input.GetTouch(0).phase == TouchPhase.Began){
 				gameObject.transform.localScale = growSize;
-				addPoints();
+				if(Input.GetTouch(0).phase == TouchPhase.){
+					addPoints();
+				}
 			}
 		}
 
@@ -85,9 +86,7 @@
 			combo = 0;
 				}*/
 	}
-	IEnumerator sleep(float time){
-		yield return new WaitForSeconds(1);
-	}
+
 
 	void OnTriggerEnter2D(Collider2D coll){
 		inZone = true;
@@ -122,19 +121,27 @@
 		iTween.MoveFrom(gameObject, hash);
 		
 	}
-	
+
 	
 	void Die(){
-		print ("dying!");
-		inZone = true;
-		sleep (5);
-		Destroy (gameObject);
+		StartCoroutine (die (1));
 		//gameObject.SetActive (false);
 		//NewPath ();
 		//Start ();
 	}
 	
+	IEnumerator die(float time){
+		yield return new WaitForSeconds(1);
+		print ("dying!");
+		inZone = true;
+		Destroy (gameObject);
+	}
 
+	IEnumerator growAndDie(float time){
+		gameObject.transform.localScale = growSize;
+		yield return new WaitForSeconds (time);
+		Destroy (gameObject);
+	}
 	
 	
 	Vector3[] NewPath(){
