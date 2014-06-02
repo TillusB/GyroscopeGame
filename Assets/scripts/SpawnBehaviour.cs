@@ -75,7 +75,7 @@
 
 			if(isSwipe && Input.GetTouch(0).phase == TouchPhase.Began){
 				gameObject.transform.localScale = growSize;
-				if(Input.GetTouch(0).phase == TouchPhase.){
+				if(Input.GetTouch(0).phase == TouchPhase.Began){
 					addPoints();
 				}
 			}

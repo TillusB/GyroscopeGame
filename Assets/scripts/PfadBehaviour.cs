@@ -15,8 +15,12 @@ public class PfadBehaviour : MonoBehaviour {
 	Vector3[] path = new Vector3[]{};
 	
 	public Material material;
+
+	private GameObject mittelpunkt;
+
+	private LineRenderer line;
 	
-	private TrailRenderer trail;
+	private int lineSegmentCount;
 	
 	// Use this for initialization
 	void Start () {
@@ -33,18 +37,28 @@ public class PfadBehaviour : MonoBehaviour {
 		pfadPrefab.SetActive (true);
 		Move ();
 		path.Initialize ();
+
+		mittelpunkt = GameObject.FindGameObjectWithTag("mittelpunkt");
 		
+		lineSegmentCount = 1;
 		
-		trail = pfadPrefab.AddComponent("TrailRenderer") as TrailRenderer;
-		trail.material = material;
-		trail.startWidth = 0.1f;
-		trail.endWidth = 0.2f;
-		trail.time = 5;
-		trail.renderer.enabled = true;
+		line = gameObject.AddComponent("LineRenderer") as LineRenderer;
+		line.SetWidth (0.1f, 0.1f);
+		line.material = material;
+		line.SetColors (Color.white, Color.white);
+		line.SetVertexCount (lineSegmentCount);
+		line.renderer.enabled = true;
+		line.SetPosition(lineSegmentCount-1, mittelpunkt.transform.position);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		line.SetPosition (0, mittelpunkt.transform.position);
+		
+		lineSegmentCount ++;
+		line.SetVertexCount (lineSegmentCount);
+		line.SetPosition (lineSegmentCount-1, gameObject.transform.position);
 
 		if (Input.touches.Length > 0 && Input.GetTouch (0).phase == TouchPhase.Moved) {
 			Touch touch = Input.GetTouch (0);
